@@ -1,9 +1,11 @@
 from estructura.biblia import Biblia
 from estructura.visualizador import Visualizador
+from buscador import Buscador
 
 def main():
     print("Iniciando carga de datos")
     biblia = Biblia()
+
     ruta_dataset = '../data/t_asv.csv'
     ruta_keys = '../data/key_english.csv'
 
@@ -22,6 +24,15 @@ def main():
         visualizador.obtener_versiculos_por_libro()
         visualizador.obtener_distribucion_longitud_versiculos()
         visualizador.obtener_heatmap_similitud_libros()
+
+
+        buscador = Buscador(biblia)
+        print("--- Buscador Semántico ---")
+        frase_buscar = input("Ingrese la frase que desea buscar: ")
+        buscador.procesar_biblia()
+        buscador.buscar_frase(frase_buscar, 5)
+
+
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
         return
