@@ -1,4 +1,5 @@
 from estructura.biblia import Biblia
+from estructura.visualizador import Visualizador
 
 def main():
     print("Iniciando carga de datos")
@@ -16,6 +17,11 @@ def main():
         for palabra, frec in top:
             print(f" - {palabra}: {frec}")
             
+
+        visualizador = Visualizador(biblia)
+        visualizador.obtener_versiculos_por_libro()
+        visualizador.obtener_distribucion_longitud_versiculos()
+        visualizador.obtener_heatmap_similitud_libros()
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
         return

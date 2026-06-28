@@ -2,3 +2,5 @@ pandas
 scikit-learn
 networkx
 nltk
+matplotlib
+numpy
