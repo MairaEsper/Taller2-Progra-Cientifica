@@ -3,3 +3,6 @@ class Versiculo:
         self.id_global = id_global
         self.numero = numero 
         self.texto_original = texto_original
+        self.tokens = []
+        
+        

@@ -4,6 +4,7 @@ from estructura.testamento import Testamento
 from estructura.libro import Libro
 from estructura.capitulo import Capitulo
 from estructura.versiculo import Versiculo
+from preprocesador import Preprocesador
 
 class Biblia:
     def __init__(self):
@@ -11,6 +12,10 @@ class Biblia:
             "OT": Testamento("OT"),
             "NT": Testamento("NT")
         }
+
+        self.preprocesador = Preprocesador()
+        self.frecuencias_globales = {}  
+        self.vocabulario = set() 
 
     def cargar_datos(self, ruta_dataset, ruta_keys):
         df_texto = pd.read_csv(ruta_dataset)
@@ -29,7 +34,6 @@ class Biblia:
 
             libro = Libro(id_libro, nombre, testamento, genero_id)
             self.testamentos[testamento].agregar_libro(libro)
-        
         
         for i in range(num_filas_texto):
             fila = df_texto.iloc[i]
@@ -53,4 +57,12 @@ class Biblia:
             capitulo_actual = libro_actual.capitulos[num_capitulo]
 
             nuevo_versiculo = Versiculo(id, num_versiculo, texto)
+            tokens_limpios = self.preprocesador.procesar_texto(texto)
+            nuevo_versiculo.tokens = tokens_limpios
+
+            for token in tokens_limpios:
+                self.frecuencias_globales[token] = self.frecuencias_globales.get(token, 0) + 1
+
             capitulo_actual.agregar_versiculo(nuevo_versiculo)
+
+        self.vocabulario = set(self.frecuencias_globales.keys())
