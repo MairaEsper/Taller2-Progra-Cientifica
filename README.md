@@ -1,4 +1,4 @@
-## Ejecución del código:
+## Instrucciones de ejecución:
 
 ### Creación entorno virtual:
 ```
@@ -12,4 +12,10 @@ python -m venv venv
 ### Instalación de librerías:
 ```
 pip install -r requirements.txt
+```
+
+### Ejecución del código:
+```
+cd src
+py main.py
 ```
