@@ -22,6 +22,7 @@ def main():
         visualizador.obtener_versiculos_por_libro()
         visualizador.obtener_distribucion_longitud_versiculos()
         visualizador.obtener_heatmap_similitud_libros()
+        visualizador.obtener_pca_versiculos()
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
         return
