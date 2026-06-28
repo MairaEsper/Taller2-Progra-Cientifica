@@ -33,6 +33,7 @@ def main():
         buscador.buscar_frase(frase_buscar, 5)
 
 
+        visualizador.obtener_pca_versiculos()
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
         return

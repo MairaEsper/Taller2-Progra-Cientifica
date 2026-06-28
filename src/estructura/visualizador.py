@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+from sklearn.decomposition import PCA
 from tfidf import TfIdf
 
 class Visualizador:
@@ -99,5 +100,57 @@ class Visualizador:
         ax.set_yticklabels(nombres_libros, fontsize=7)
         
         plt.title("Heatmap de Similitud Semántica entre Libros")
+        plt.tight_layout()
+        plt.show()
+        
+    def obtener_pca_versiculos(self):
+        textos_versiculos = []
+        etiquetas_testamento = []
+
+        for nombre_testamento, testamento in self.biblia.testamentos.items():
+            for libro in testamento.libros.values():
+                for capitulo in libro.capitulos.values():
+                    for versiculo in capitulo.versiculos:
+                        if len(versiculo.tokens) > 0:
+                            palabras = versiculo.tokens
+                        else:
+                            texto_limpio = versiculo.texto_original.lower().replace(".", "").replace(",", "").replace('"', "")
+                            palabras = texto_limpio.split()
+                        if len(palabras) > 0: 
+                            textos_versiculos.append(palabras)
+                            etiquetas_testamento.append(nombre_testamento)
+
+        vectores_tfidf = self.tfidf.calcular_tfidf(textos_versiculos)
+
+        pca = PCA(n_components=2)
+        matriz_tfidf = np.array(vectores_tfidf)
+        coordenadas_2d = pca.fit_transform(matriz_tfidf)
+
+        x_ot = []
+        y_ot = []
+        x_nt = []
+        y_nt = []
+
+        for i in range(len(etiquetas_testamento)):
+            etiqueta = etiquetas_testamento[i]
+    
+            if etiqueta == "OT":
+                x_ot.append(coordenadas_2d[i, 0])
+                y_ot.append(coordenadas_2d[i, 1])
+            else:
+                x_nt.append(coordenadas_2d[i, 0])
+                y_nt.append(coordenadas_2d[i, 1])
+                
+        plt.figure(figsize=(10, 8))
+
+        plt.scatter(x_ot, y_ot, alpha=0.3, label='Antiguo Testamento (OT)', color='blue', s=10)
+        plt.scatter(x_nt, y_nt, alpha=0.3, label='Nuevo Testamento (NT)', color='orange', s=10)
+
+        plt.title("Visualización de Versículos utilizando PCA")
+        plt.xlabel("Componente Principal 1")
+        plt.ylabel("Componente Principal 2")
+        plt.legend()
+        plt.grid(True, linestyle='--', alpha=0.7)
+        
         plt.tight_layout()
         plt.show()
