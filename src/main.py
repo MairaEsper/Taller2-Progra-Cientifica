@@ -1,6 +1,7 @@
 from estructura.biblia import Biblia
 from estructura.visualizador import Visualizador
 from buscador import Buscador
+from clasificador import ClasificadorVersiculos
 
 def main():
     print("Iniciando carga de datos")
@@ -34,6 +35,10 @@ def main():
 
 
         visualizador.obtener_pca_versiculos()
+        
+        print("Iniciando el Clasificador de Versículos...")
+        clasificador = ClasificadorVersiculos(biblia)
+        clasificador.entrenar_evaluar()
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
         return
