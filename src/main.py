@@ -1,6 +1,7 @@
 from estructura.biblia import Biblia
 from estructura.visualizador import Visualizador
 from buscador import Buscador
+from generador import Generador
 
 def main():
     print("Iniciando carga de datos")
@@ -34,6 +35,13 @@ def main():
 
 
         visualizador.obtener_pca_versiculos()
+
+        generador = Generador(biblia)
+
+        generador.entrenar_modelos(3)
+        versiculo = generador.generar_versiculo(2, "Jesus", 15)
+        print(versiculo)
+
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
         return
