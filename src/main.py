@@ -3,6 +3,7 @@ from estructura.visualizador import Visualizador
 from buscador import Buscador
 from clasificador import ClasificadorVersiculos
 from generador import Generador
+from sentimientos import AnalizadorSentimiento
 
 def main():
     print("Iniciando carga de datos")
@@ -46,6 +47,9 @@ def main():
         generador.entrenar_modelos(3)
         versiculo = generador.generar_versiculo(2, "Jesus", 15)
         print(versiculo)
+
+        analizador = AnalizadorSentimiento(biblia)
+        analizador.calcular_visualizar()
 
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
