@@ -70,6 +70,7 @@ class Generador:
         while len(resultado) < max_palabras:
             if n == 1:
                 contexto = ()
+                tabla_usar = 1
             else:
                 tam_contexto = n - 1
                 cantidad_actual = len(resultado)
@@ -80,12 +81,14 @@ class Generador:
                     
                     lista_contexto = resultado[indice_inicio : indice_fin]
                     contexto = tuple(lista_contexto)
+                    tabla_usar = n
 
                 else:
                     contexto = tuple(resultado)
+                    tabla_usar = cantidad_actual + 1
 
-            if contexto in self.tablas[n]:
-                tabla_contexto = self.tablas[n][contexto]
+            if contexto in self.tablas[tabla_usar]:
+                tabla_contexto = self.tablas[tabla_usar][contexto]
             else:
                 tabla_contexto = None
             
@@ -105,5 +108,8 @@ class Generador:
             
             if palabra_elegida == "<end>":
                 break
-                
-        return " ".join(resultado)
+        
+        texto_final = " ".join(resultado)
+        texto_final = texto_final.replace("<start>", "").replace("<end>", "").strip()
+
+        return texto_final
