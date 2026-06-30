@@ -1,3 +1,8 @@
+## Integrantes:
+Maira Cortés Araya - 21.324.438-8
+Francisco Plaza Pizarro - 20.007.355-K
+
+
 ## Instrucciones de ejecución:
 
 ### Creación entorno virtual:
